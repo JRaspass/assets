@@ -1,1 +1,3 @@
-docker build -t $DOCKER_REPO -t $DOCKER_REPO:$SOURCE_COMMIT .
+#!/bin/sh
+
+exec docker build -t $DOCKER_REPO -t $DOCKER_REPO:$SOURCE_COMMIT .
