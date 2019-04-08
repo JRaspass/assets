@@ -11,6 +11,6 @@ RUN cd /assets \
 
 FROM scratch
 
-COPY --from=0 /assets/assets /
+COPY --from=0 /assets/assets /cmd
 
-CMD ["/assets"]
+CMD ["/cmd"]
