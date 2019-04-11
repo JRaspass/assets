@@ -106,6 +106,8 @@ func main() {
 		panic(err)
 	}
 
+	run()
+
 	if dev {
 		c := make(chan notify.EventInfo, 1)
 
@@ -126,8 +128,6 @@ func main() {
 
 			lastRun = time.Now()
 		}
-	} else {
-		run()
 	}
 }
 
