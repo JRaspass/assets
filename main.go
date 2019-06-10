@@ -102,7 +102,7 @@ func main() {
 	min.AddFunc("application/manifest+json", json.Minify)
 	min.AddFunc("text/css", css.Minify)
 
-	if err := os.Chdir("static"); err != nil {
+	if err := os.Chdir("assets"); err != nil {
 		panic(err)
 	}
 
@@ -170,6 +170,11 @@ func run() {
 
 	for _, file := range files {
 		ext := filepath.Ext(file)
+
+		if ext == ".go" {
+			continue
+		}
+
 		asset := Asset{Mime: mimes[ext]}
 
 		if asset.Mime == "" {
@@ -234,7 +239,7 @@ func run() {
 		paths[file] = "/assets/" + fingerprint
 	}
 
-	file, err := os.Create("../assets/assets.go")
+	file, err := os.Create("assets.go")
 	if err != nil {
 		panic(err)
 	}
