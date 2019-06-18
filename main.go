@@ -42,6 +42,7 @@ var mimes = map[string]string{
 	".png":         "image/png",
 	".svg":         "image/svg+xml",
 	".webmanifest": "application/manifest+json",
+	".woff2":       "font/woff2",
 }
 
 var variables = map[string][]byte{
