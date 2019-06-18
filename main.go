@@ -30,7 +30,7 @@ type Asset struct {
 }
 
 var cssAssetURL = regexp.MustCompile(`asset-url\('(.*?)'\)`)
-var cssSVGEmbed = regexp.MustCompile(`svg-embed\('(.*?)'\)`)
+var cssSVGEmbed = regexp.MustCompile(`svg-embed\('(.*?)'(?:,(.*?))?\)`)
 var cssVariable = regexp.MustCompile(`var\(--(.*?)\)`)
 var jsAssetPath = regexp.MustCompile(`assetPath\('(.*?)'\)`)
 var manifestSrc = regexp.MustCompile(`"src":"(.*?)"`)
@@ -71,9 +71,15 @@ func cssAssetURLFunc(match []byte) []byte {
 }
 
 func cssSVGEmbedFunc(match []byte) []byte {
-	svg, err := ioutil.ReadFile(cssSVGEmbed.FindStringSubmatch(string(match))[1])
+	matches := cssSVGEmbed.FindStringSubmatch(string(match))
+
+	svg, err := ioutil.ReadFile(matches[1])
 	if err != nil {
 		panic(err)
+	}
+
+	if matches[2] != "" {
+		svg = bytes.ReplaceAll(svg, []byte("FILL"), []byte(matches[2]))
 	}
 
 	svg = cssVariable.ReplaceAllFunc(svg, cssVariableFunc)
