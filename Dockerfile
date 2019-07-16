@@ -1,8 +1,6 @@
-FROM golang:1.12.6-alpine
+FROM golang:1.13beta1-alpine3.10
 
-RUN apk update \
- && apk upgrade \
- && apk add g++ git musl-dev
+RUN apk --no-cache add g++ git musl-dev
 
 COPY go.mod go.sum main.go /assets/
 
